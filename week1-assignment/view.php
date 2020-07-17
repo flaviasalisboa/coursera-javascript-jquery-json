@@ -1,4 +1,6 @@
 <?php
+// View profiles
+
 session_start();
 
 if ( ! isset($_SESSION['name']) ) {
@@ -33,7 +35,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if ( $row === false ) {
     $_SESSION['status'] = 'Bad value for profile_id';
     header('Location: edit.php');
-    return; 
+    return;
 }
 $fn = htmlentities($row['first_name']);
 $ln = htmlentities($row['last_name']);
@@ -68,7 +70,7 @@ $profile_id = $row['profile_id'];
     <p>Summary: <?= $su ?>
     <p>
     <input type="hidden" name="profile_id" value="<?= $profile_id ?>">
-    <a href="index.php" class="btn btn-default">Done</a>    
+    <a href="index.php" class="btn btn-default">Done</a>
     </form>
 
 </div>

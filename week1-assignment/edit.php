@@ -1,4 +1,6 @@
 <?php
+// editing data for profiles
+
 session_start();
 
 if ( ! isset($_SESSION['name']) ) {
@@ -33,7 +35,7 @@ if (isset($_REQUEST['profile_id']))
     $profile_id = htmlentities($_REQUEST['profile_id']);
 
     // Check to see if we have some POST data, if we do process it
-    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary'])) 
+    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary']))
     {
         if (strlen($_POST['first_name']) < 1 || strlen($_POST['last_name']) < 1 || strlen($_POST['email']) < 1 || strlen($_POST['headline']) < 1 || strlen($_POST['summary']) < 1)
         {
@@ -62,8 +64,8 @@ if (isset($_REQUEST['profile_id']))
         ");
 
         $stmt->execute([
-            ':first_name' => $first_name, 
-            ':last_name' => $last_name, 
+            ':first_name' => $first_name,
+            ':last_name' => $last_name,
             ':email' => $email,
             ':headline' => $headline,
             ':summary' => $summary,
@@ -83,7 +85,7 @@ if (isset($_REQUEST['profile_id']))
     if ( $row === false ) {
         $_SESSION['status'] = 'Bad value for profile_id';
         header("Location: edit.php?profile_id=" . htmlentities($_REQUEST['profile_id']));
-        return; 
+        return;
     }
     $fn = htmlentities($row['first_name']);
     $ln = htmlentities($row['last_name']);
@@ -126,7 +128,7 @@ if (isset($_REQUEST['profile_id']))
     <p>
     <input type="hidden" name="profile_id" value="<?= $profile_id ?>">
     <input class="btn btn-primary" type="submit" value="Save">
-    <a href="index.php" class="btn btn-default">Cancel</a>    
+    <a href="index.php" class="btn btn-default">Cancel</a>
     </form>
 
 </div>
