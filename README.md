@@ -2,6 +2,7 @@
 
 
 Coursera Course: JavaScript, jQuery, and JSON
+
 University of Michigan
 
 
