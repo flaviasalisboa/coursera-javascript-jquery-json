@@ -1,4 +1,6 @@
 <?php
+// Adding profiles
+
 session_start();
 
 if ( ! isset($_SESSION['name']) ) {
@@ -28,10 +30,10 @@ $name = htmlentities($_SESSION['name']);
 
 $_SESSION['color'] = 'red';
 
-if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary'])) 
+if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary']))
 {
     $msg = validateProfile();
-    if ( is_string($msg) ) 
+    if ( is_string($msg) )
     {
         $_SESSION['status'] = $msg;
         header("Location: add.php");
@@ -39,20 +41,20 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
     }
 
     $msg = validatePos();
-    if ( is_string($msg) ) 
+    if ( is_string($msg) )
     {
         $_SESSION['status'] = $msg;
         header("Location: add.php");
         return;
-    }    
+    }
 
     $msg = validateEdu();
-    if ( is_string($msg) ) 
+    if ( is_string($msg) )
     {
         $_SESSION['status'] = $msg;
         header("Location: add.php");
         return;
-    }    
+    }
 
     $first_name = htmlentities($_POST['first_name']);
     $last_name = htmlentities($_POST['last_name']);
@@ -67,8 +69,8 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
 
     $stmt->execute([
         ':user_id' => $_SESSION['user_id'],
-        ':first_name' => $first_name, 
-        ':last_name' => $last_name, 
+        ':first_name' => $first_name,
+        ':last_name' => $last_name,
         ':email' => $email,
         ':headline' => $headline,
         ':summary' => $summary,
@@ -82,7 +84,7 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
         if ( ! isset($_POST['desc'.$i]) ) continue;
         $year = $_POST['year'.$i];
         $desc = $_POST['desc'.$i];
-    
+
         $stmt2 = $pdo->prepare('INSERT INTO Position (profile_id, rank, year, description) VALUES ( :pid, :rank, :year, :desc)');
 
         $stmt2->execute(array(
@@ -112,8 +114,8 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
             $stmt4 = $pdo->prepare('INSERT INTO institution (name) VALUES ( :name)');
             $stmt4->execute(array(':name' => $school));
             $institution_id = $pdo->lastInsertId();
-        } 
-    
+        }
+
         $stmt5 = $pdo->prepare('INSERT INTO education (profile_id, institution_id, rank, year) VALUES ( :pid, :instid, :rank, :year_edu)');
 
         $stmt5->execute(array(
@@ -130,7 +132,7 @@ if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['e
 
     header('Location: index.php');
     return;
-    
+
 }
 ?>
 

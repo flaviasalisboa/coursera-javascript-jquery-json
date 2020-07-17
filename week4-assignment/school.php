@@ -1,10 +1,12 @@
 <?php
+// autocomplete database
+
 require_once "pdo.php";
 
 $term = $_GET['term'];
 error_log("Looking up typeahead term=".$term);
 
-$stmt = $pdo->prepare('SELECT name from institution 
+$stmt = $pdo->prepare('SELECT name from institution
 	WHERE name LIKE :prefix');
 $stmt->execute(array( ':prefix' => $term."%"));
 

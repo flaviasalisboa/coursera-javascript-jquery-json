@@ -1,4 +1,6 @@
 <?php
+// viewing profiles
+
 session_start();
 
 if ( ! isset($_SESSION['name']) ) {
@@ -33,7 +35,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if ( $row === false ) {
     $_SESSION['status'] = 'Bad value for profile_id';
     header('Location: edit.php');
-    return; 
+    return;
 }
 $fn = htmlentities($row['first_name']);
 $ln = htmlentities($row['last_name']);
@@ -46,7 +48,7 @@ $profile_id = $row['profile_id'];
 $stmt = $pdo->prepare("SELECT * FROM position where profile_id = :xyz");
 $stmt->execute(array(":xyz" => $_GET['profile_id']));
 $position = [];
-    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) 
+    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) )
     {
         $position[] = $row;
     }
@@ -55,7 +57,7 @@ $position = [];
 $stmt = $pdo->prepare("SELECT * FROM education where profile_id = :xyz");
 $stmt->execute(array(":xyz" => $_GET['profile_id']));
 $education = [];
-    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) 
+    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) )
     {
         $education[] = $row;
     }
@@ -103,7 +105,7 @@ $education = [];
             <div>
                 <ul>
                     <?php for($i=1; $i<=$educationLen; $i++) : ?>
-                                <?php 
+                                <?php
                                 $edu_school = $education[$i-1]->institution_id;
                                 $stmt = $pdo->prepare("SELECT * FROM institution
                                                 WHERE institution_id = :edu_school LIMIT 1");
@@ -117,7 +119,7 @@ $education = [];
     <?php endif; ?>
     <p><br />
     <input type="hidden" name="profile_id" value="<?= $profile_id ?>">
-    <a href="index.php" class="btn btn-default">Done</a>    
+    <a href="index.php" class="btn btn-default">Done</a>
     </form>
 
 </div>

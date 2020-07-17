@@ -1,6 +1,7 @@
 <?php
+// utilities functions for use
 
-function pdoDB() 
+function pdoDB()
 {
     $pdo = new PDO('mysql:host=localhost;port=3306;dbname=misc2','flavia','php200-2020');
     // set the PDO error mode to exception
@@ -78,7 +79,7 @@ function validationEdit()
         return false;
     }
 
-    for ($i=1; $i<=9; $i++) 
+    for ($i=1; $i<=9; $i++)
     {
     	if ( ! isset($_POST['year'.$i]) ) continue;
 		if ( ! isset($_POST['desc'.$i]) ) continue;
