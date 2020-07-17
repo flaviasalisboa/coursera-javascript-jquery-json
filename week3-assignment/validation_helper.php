@@ -1,8 +1,9 @@
 <?php
+// validation functions used
 
-function pdoHelper() 
+function pdoHelper()
 {
-    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=misc2','flavia','php200-2020');
+    $pdo = new PDO('mysql:host=localhost;port=3306;dbname=misc2','user','pass');
     // set the PDO error mode to exception
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     return $pdo;
@@ -16,7 +17,7 @@ function validationHelper()
         return false;
     }
 
-    for ($i=1; $i<=9; $i++) 
+    for ($i=1; $i<=9; $i++)
     {
     	if ( ! isset($_POST['year'.$i]) ) continue;
 		if ( ! isset($_POST['desc'.$i]) ) continue;

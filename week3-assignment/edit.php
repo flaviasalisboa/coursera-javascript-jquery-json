@@ -1,4 +1,5 @@
 <?php
+// Editing profiles
 
 session_start();
 
@@ -24,7 +25,7 @@ if ( isset($_SESSION['status']) ) {
     unset($_SESSION['color']);
 }
 
-try 
+try
 {
     $pdo = pdoDB();
 }
@@ -44,7 +45,7 @@ if (isset($_REQUEST['profile_id']))
     $profile_id = htmlentities($_REQUEST['profile_id']);
 
     // Check to see if we have some POST data, if we do process it
-    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary'])) 
+    if (isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['headline']) && isset($_POST['summary']))
     {
         if(!validationEdit())
         {
@@ -65,8 +66,8 @@ if (isset($_REQUEST['profile_id']))
         ");
 
         $stmt->execute([
-            ':first_name' => $first_name, 
-            ':last_name' => $last_name, 
+            ':first_name' => $first_name,
+            ':last_name' => $last_name,
             ':email' => $email,
             ':headline' => $headline,
             ':summary' => $summary,
@@ -99,8 +100,8 @@ if (isset($_REQUEST['profile_id']))
 
             $stmt->execute([
                 ':profile_id' => $profile_id,
-                ':rank' => $rank, 
-                ':year' => $year, 
+                ':rank' => $rank,
+                ':year' => $year,
                 ':description' => $desc,
             ]);
 
@@ -115,28 +116,28 @@ if (isset($_REQUEST['profile_id']))
     }
 
     $stmt = $pdo->prepare("
-        SELECT * FROM profile 
+        SELECT * FROM profile
         WHERE profile_id = :profile_id
     ");
 
     $stmt->execute([
-        ':profile_id' => $profile_id, 
+        ':profile_id' => $profile_id,
     ]);
 
     $profile = $stmt->fetch(PDO::FETCH_OBJ);
 
     $stmt = $pdo->prepare("
-        SELECT * FROM position 
+        SELECT * FROM position
         WHERE profile_id = :profile_id
     ");
 
     $stmt->execute([
-        ':profile_id' => $profile_id, 
+        ':profile_id' => $profile_id,
     ]);
 
     $position = [];
 
-    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) ) 
+    while ( $row = $stmt->fetch(PDO::FETCH_OBJ) )
     {
         $position[] = $row;
     }
@@ -156,7 +157,7 @@ if (isset($_REQUEST['profile_id']))
         <div class="container">
             <h1>Editing Profile for <?php echo $name; ?></h1>
             <?php
-                if ( $status !== false ) 
+                if ( $status !== false )
                 {
                     // Look closely at the use of single and double quotes
                     echo(
@@ -215,7 +216,7 @@ if (isset($_REQUEST['profile_id']))
                                         <input class="form-control" type="text" name="year<?php echo $i; ?>" value="<?php echo $position[$i-1]->year; ?>">
                                     </div>
                                     <div class="col-sm-1">
-                                        <button class="btn btn-basic" 
+                                        <button class="btn btn-basic"
                                             onclick="$('#position<?php echo $i; ?>').remove();return false;"
                                         >-</button>
                                     </div>

@@ -1,4 +1,6 @@
 <?php
+// Initial file index.php
+
 session_start();
 
 $login = false;
@@ -20,7 +22,7 @@ if (isset($_SESSION['name']) ) {
 	$profiles = [];
 	$all_profiles = $pdo->query("SELECT * FROM profile");
 
-	while ( $row = $all_profiles->fetch(PDO::FETCH_OBJ) ) 
+	while ( $row = $all_profiles->fetch(PDO::FETCH_OBJ) )
 	{
     	$profiles[] = $row;
 	}
@@ -43,10 +45,10 @@ if (isset($_SESSION['name']) ) {
 				<p>
 					Note: Your implementation should retain data across multiple logout/login sessions. This sample implementation clears all its data periodically - which you should not do in your implementation.
 				</p>
-			</div>	
+			</div>
 			<?php else : ?>
 				<?php
-	                if ( $status !== false ) 
+	                if ( $status !== false )
 	                {
 	                    echo(
 	                        '<p style="color: ' .$status_color. ';" class="col-sm-10">'.
@@ -63,7 +65,7 @@ if (isset($_SESSION['name']) ) {
 
                   <table class="table-condensed table-bordered">
                   <tr><th>Name</th><th>Headline</th><th>Action</th><tr>
-                    <?php 
+                    <?php
                         $stmt = $pdo->query("SELECT first_name, last_name, headline, profile_id FROM profile");
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                             echo "<tr><td>";
@@ -76,7 +78,7 @@ if (isset($_SESSION['name']) ) {
             echo('<a href="edit.php?profile_id='.$row['profile_id'].'">Edit</a> / ');
 			echo('<a href="delete.php?profile_id='.$row['profile_id'].'">Delete</a>');
                             echo "</td></tr>\n";
-                        }                      
+                        }
                     ?>
                   </table><br>
             <?php } ?>

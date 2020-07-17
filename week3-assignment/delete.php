@@ -1,4 +1,6 @@
 <?php
+// Deleting profiles
+
 session_start();
 
 if ( ! isset($_SESSION['name']) ) {
@@ -29,7 +31,7 @@ $_SESSION['color'] = 'red';
 
 
 if ( isset($_POST['delete']) && isset($_POST['profile_id']) ) {
-	$sql = "DELETE FROM profile WHERE profile_id = :zip"; 
+	$sql = "DELETE FROM profile WHERE profile_id = :zip";
 	$stmt = $pdo->prepare($sql);
 	$stmt->execute(array(':zip'=>$_POST['profile_id']));
     $_SESSION['status'] = 'Profile deleted';
@@ -43,7 +45,7 @@ $row = $stmt->fetch(PDO::FETCH_ASSOC);
 if ( $row === false ) {
 	$_SESSION['error'] = 'Bad value for profile_id';
 	header('Location: index.php');
-	return;	
+	return;
 }
 ?>
 <html>
@@ -54,11 +56,11 @@ if ( $row === false ) {
 <body>
 <div class="container">
   	<H2>Deleting Profile for <?php echo $name; ?></H2><br>
-  		First Name: <?= htmlentities($row['first_name']) ?> 
-  		<br> 
+  		First Name: <?= htmlentities($row['first_name']) ?>
+  		<br>
   		Last Name: <?= htmlentities($row['last_name']) ?>
   	</p>
-	
+
 	<form method="post">
 		<input type="hidden" name="profile_id" value="<?= $row['profile_id'] ?>">
 		<input type="submit" value="Delete" name="delete" class="btn btn-primary">
@@ -66,4 +68,4 @@ if ( $row === false ) {
 	</form>
 </div>
 </body>
-</html>		
+</html>
